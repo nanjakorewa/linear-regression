@@ -7,3 +7,4 @@ isort
 matplotlib
 seaborn
 japanize_matplotlib
+statsmodels
