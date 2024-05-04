@@ -7,6 +7,7 @@ from sklearn.datasets import make_regression
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_absolute_error, r2_score
 
+rng = np.random.default_rng()
 
 def _do_residual_analysis(
     X, y, model=LinearRegression(), pmae=None, pr2=None, applylog=False
@@ -25,6 +26,14 @@ def _do_residual_analysis(
     plt.scatter(y, pred, s=1)
     plt.xlabel("正解")
     plt.ylabel("予測")
+    st.pyplot(fig)
+
+
+    st.markdown("## 残差のヒストグラム")
+    fig = plt.figure(figsize=(4, 2))
+    plt.hist(y-pred)
+    plt.xlabel("残差")
+    plt.tight_layout()
     st.pyplot(fig)
 
     st.markdown("## 各変数と残差の比較")
@@ -68,10 +77,10 @@ def get_sample_data(n, pattern=0, allpositive=False, add_dummy=False):
         x3 = np.random.randint(100, 200)
 
         y = (
-            2.3 * (x1 + np.random.rand())
-            - 10 * (x2 + np.random.rand())
-            + 0.1 * (x3 + np.random.rand())
-            + np.random.rand() * 10
+            2.3 * (x1 + rng.standard_normal())
+            - 10 * (x2 + rng.standard_normal())
+            + 0.1 * (x3 + rng.standard_normal())
+            + rng.standard_normal() * 10
         )
 
         if add_dummy:
@@ -91,7 +100,7 @@ st.markdown("# 線形回帰")
 
 N = int(st.slider("プロットするデータ数", 100, 1000, 500))
 
-tab1, tab2, tab3, tab4 = st.tabs(["線形回帰が適切な例", "外れ値がある例", "非線形な例", "説明変数がXに含まれていない時"])
+tab1, tab2, tab3, tab4 = st.tabs(["線形回帰が適切な例", "外れ値がある例", "非線形な関係の例", "説明変数がXに含まれていない時"])
 
 with tab1:
     X, y = get_sample_data(N)
@@ -119,7 +128,7 @@ with tab3:
     mae, r2 = _do_residual_analysis(X, y, model=LinearRegression())
 
     st.markdown("## 対数変換した場合")
-    options = st.multiselect("対数変換する変数を選んでください", ["x1", "x2", "x3"], ["x1", "x2", "x3"])
+    options = st.multiselect("対数変換する変数を選んでください", ["x1", "x2", "x3"], ["x1", "x2"])
 
     if "x1" in options:
         X[:, 0] = np.sqrt(X[:, 0])
