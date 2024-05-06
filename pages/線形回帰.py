@@ -9,6 +9,7 @@ from sklearn.metrics import mean_absolute_error, r2_score
 
 rng = np.random.default_rng()
 
+
 def _do_residual_analysis(
     X, y, model=LinearRegression(), pmae=None, pr2=None, applylog=False
 ):
@@ -28,10 +29,9 @@ def _do_residual_analysis(
     plt.ylabel("予測")
     st.pyplot(fig)
 
-
     st.markdown("## 残差のヒストグラム")
     fig = plt.figure(figsize=(4, 2))
-    plt.hist(y-pred)
+    plt.hist(y - pred)
     plt.xlabel("残差")
     plt.tight_layout()
     st.pyplot(fig)
@@ -100,7 +100,9 @@ st.markdown("# 線形回帰")
 
 N = int(st.slider("プロットするデータ数", 100, 1000, 500))
 
-tab1, tab2, tab3, tab4 = st.tabs(["線形回帰が適切な例", "外れ値がある例", "非線形な関係の例", "説明変数がXに含まれていない時"])
+tab1, tab2, tab3, tab4 = st.tabs(
+    ["線形回帰が適切な例", "外れ値がある例", "非線形な関係の例", "説明変数がXに含まれていない時"]
+)
 
 with tab1:
     X, y = get_sample_data(N)

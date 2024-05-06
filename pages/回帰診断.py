@@ -1,16 +1,17 @@
-import streamlit as st
+from typing import Type
+
+import matplotlib.pyplot as plt
 
 # base code
 import numpy as np
+import pandas as pd
 import seaborn as sns
-from statsmodels.tools.tools import maybe_unwrap_results
-from statsmodels.graphics.gofplots import ProbPlot
-from statsmodels.stats.outliers_influence import variance_inflation_factor
-import matplotlib.pyplot as plt
-from typing import Type
 import statsmodels
 import statsmodels.formula.api as smf
-import pandas as pd
+import streamlit as st
+from statsmodels.graphics.gofplots import ProbPlot
+from statsmodels.stats.outliers_influence import variance_inflation_factor
+from statsmodels.tools.tools import maybe_unwrap_results
 
 st.markdown(
     """
